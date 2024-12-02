@@ -1,12 +1,15 @@
+package src.day02;
+
 import java.io.IOException;
 import java.util.Arrays;
+import src.TextParser;
 
 public class day2 {
     public static void main(String[] args) {
         TextParser tx = new TextParser();
         String input;
         try {
-            input = tx.readFromFile("day2");
+            input = tx.readFromFile("src/day02/day2");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

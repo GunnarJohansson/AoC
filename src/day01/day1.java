@@ -1,12 +1,14 @@
+package src.day01;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import TextParser;
+import src.TextParser;
 public class day1 {
     public static void main(String[] args) throws IOException {
         TextParser tx = new TextParser();
-        String content = tx.readFromFile("day1");
+        String content = tx.readFromFile("src/day01/day1");
         List<Integer> leftList = new ArrayList<Integer>();
         List<Integer> rightList = new ArrayList<Integer>();
 
