@@ -7,35 +7,53 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class day3 {
     public static void main(String[] args) {
         TextParser tx = new TextParser();
         String input;
         List<Integer> numbers = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
 
         try {
             input = tx.readFromFile("src/day03/day3");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        int i = input.indexOf("mul(");
-        while(i != -1) {
-            String search = input.substring(i);
-            //System.out.println(search);
-            if(validateString(search)) {
-                numbers.add(calculateNumbersInString(search));
+        Pattern pattern = Pattern.compile("mul\\(\\d{1,3}(,\\d{1,3})*\\)");
+        Matcher matcher = pattern.matcher(input);
+        Pattern fullPattern = Pattern.compile("mul\\(\\d{1,3}(,\\d{1,3})*\\)|don't\\(\\)|do\\(\\)");
+        Matcher fullMatcher = fullPattern.matcher(input);
+        while (fullMatcher.find()) {
+            strings.add(fullMatcher.group(0));
+        }
+        boolean calculate = true;
+        long resultFull = 0;
+        while (!strings.isEmpty()) {
+            String current = strings.removeFirst();
+            if(current.equals("don't()")) {
+                calculate = false;
+                System.out.println("false");
             }
-            i = input.indexOf("mul(", i+4);
+            else if (current.equals("do()")) {
+                calculate = true;
+                System.out.println("true");
+            }
+            else if (calculate) {
+                resultFull += calculateNumbersInString(current);
+            }
+        }
+        System.out.println("Part 2: "+ resultFull);
+        while(matcher.find())
+        {
+            numbers.add(calculateNumbersInString(matcher.group(0)));
         }
         long result = 0;
         for(int num : numbers) {
             result += num;
-            System.out.println(num);
-            //System.out.println(result);
         }
-        System.out.println(result);
+        System.out.println("Part 1: "+ result);
     }
     public static boolean validateString(String search) {
         boolean valid = false;
@@ -73,15 +91,12 @@ public class day3 {
             }
             if(String.valueOf(search.charAt(i)).equals(")")) {
                 int calc = calculateNumberInQueue(queue);
-                /*System.out.println(number);
-                System.out.println(calc);*/
                 number = number * calc;
             }
             if(String.valueOf(search.charAt(i)).equals(")")) {
                 i = search.length();
             }
         }
-        System.out.println(number);
         return number;
     }
     public static int calculateNumberInQueue(Queue<Integer> queue) {
