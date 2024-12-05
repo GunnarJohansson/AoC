@@ -34,11 +34,9 @@ public class day3 {
             String current = strings.removeFirst();
             if(current.equals("don't()")) {
                 calculate = false;
-                System.out.println("false");
             }
             else if (current.equals("do()")) {
                 calculate = true;
-                System.out.println("true");
             }
             else if (calculate) {
                 resultFull += calculateNumbersInString(current);
@@ -54,28 +52,6 @@ public class day3 {
             result += num;
         }
         System.out.println("Part 1: "+ result);
-    }
-    public static boolean validateString(String search) {
-        boolean valid = false;
-        for(int i = 4; i < search.length(); i++) {
-            while (Character.isDigit(search.charAt(i))) {
-                i++;
-            }
-            if (String.valueOf(search.charAt(i)).equals(",")) {
-                i++;
-                while (Character.isDigit(search.charAt(i))) {
-                    i++;
-                }
-                if (String.valueOf(search.charAt(i)).equals(")")) {
-                    valid = true;
-                    i = search.length();
-                } else {
-                    valid = false;
-                    i = search.length();
-                }
-            }
-        }
-        return valid;
     }
     public static int calculateNumbersInString(String search) {
         Queue<Integer> queue = new LinkedList<>();
