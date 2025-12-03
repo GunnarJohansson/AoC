@@ -8,7 +8,7 @@ import src.TextParser;
 public class day1 {
     public static void main(String[] args) throws IOException {
         TextParser tx = new TextParser();
-        String content = tx.readFromFile("src/day01/day1");
+        String content = tx.readFromFile("src/day01/input");
         List<Integer> leftList = new ArrayList<Integer>();
         List<Integer> rightList = new ArrayList<Integer>();
 
